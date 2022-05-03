@@ -1,7 +1,10 @@
 package com.discovery.codingassesment.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,8 +17,9 @@ import com.discovery.codingassesment.utils.AppUtils
 import com.discovery.codingassesment.viewmodel.NewsHomeActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class NewsHomeActivity : AppCompatActivity() {
+class NewsHomeActivity : AppCompatActivity(), NewsHeadlineAdapter.OnItemClickListener {
 
     companion object {
         val TAG: String = NewsHomeActivity::class.java.simpleName
@@ -38,7 +42,8 @@ class NewsHomeActivity : AppCompatActivity() {
     }
 
     private fun buildRecyclerView() {
-        newsHeadlineAdapter = NewsHeadlineAdapter(this, newsArticleList)
+        newsHeadlineAdapter = NewsHeadlineAdapter(this, newsArticleList,
+            this@NewsHomeActivity)
         binding.newsHeadlinesRv.layoutManager = LinearLayoutManager(this)
         binding.newsHeadlinesRv.adapter = newsHeadlineAdapter
 
@@ -84,6 +89,11 @@ class NewsHomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onItemClick(view: View, url: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 
 }

@@ -7,15 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.discovery.codingassesment.R
 import com.discovery.codingassesment.data.model.NewsHeadlinesData
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NewsHeadlineAdapter(
     private var context: Context,
-    private var mDataSet: List<NewsHeadlinesData.Articles>)
+    private var mDataSet: List<NewsHeadlinesData.Articles>,
+    private val itemClickListener: OnItemClickListener
+    )
     : RecyclerView.Adapter<NewsHeadlineAdapter.ViewHolder>(){
 
     companion object {
@@ -36,11 +42,30 @@ class NewsHeadlineAdapter(
         Log.d(TAG, "onBindViewHolder -> data : {${this.mDataSet[position]}")
 
         holder.bind(this.mDataSet[position].urlToImage)
-        holder.tvNewsSource.text = "Source: ${this.mDataSet[position].source.name}"
-        Log.d("Nishant", "published at  ${this.mDataSet[position].publishedAt}")
-        holder.tvPublishedAt.text = "Published At: ${this.mDataSet[position].publishedAt}"
+        val source = context.resources.getString(
+            R.string.news_source) + this.mDataSet[position].source.name
+        holder.tvNewsSource.text = source
+
+        val publishedAt = this.mDataSet[position].publishedAt
+        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+        val output = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US)
+        var date: Date? = null
+        try {
+            date = input.parse(publishedAt)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        val formatted = date?.let { output.format(it) }
+        Log.i("DATE", "" + formatted)
+
+        Log.d("Nishant", "published at  $formatted")
+        holder.tvPublishedAt.text = formatted
+
         holder.tvNewsTitle.text = this.mDataSet[position].title
 
+        holder.parentRow.setOnClickListener {
+            itemClickListener.onItemClick(it, mDataSet[position].newsURL)
+        }
 
     }
 
@@ -50,6 +75,7 @@ class NewsHeadlineAdapter(
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val parentRow: LinearLayout = itemView.findViewById(R.id.parent_row)
         private val ivNewsImageView: ImageView = itemView.findViewById(R.id.iv_row_news_image)
         val tvNewsTitle: TextView = itemView.findViewById(R.id.tv_row_news_title)
         val tvNewsSource: TextView = itemView.findViewById(R.id.tv_row_news_source)
@@ -73,5 +99,9 @@ class NewsHeadlineAdapter(
     fun refreshList(filterList: List<NewsHeadlinesData.Articles>) {
         this.mDataSet = filterList
         notifyDataSetChanged()
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(view: View, url: String)
     }
 }
