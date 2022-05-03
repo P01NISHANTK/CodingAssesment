@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">CodingAssesment</string>
+    <string name="app_name">NewsHeadlines</string>
+    <string name="image">image</string>
 </resources>

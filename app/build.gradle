@@ -12,11 +12,12 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.discoverry.codingassesment"
-        minSdk 21
+        applicationId "com.discovery.codingassesment"
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,6 +28,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -34,6 +40,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    kapt { generateStubs = true }
 }
 
 dependencies {
@@ -49,11 +57,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Kotlin
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0-native-mt'
 
     // Hilt dependency injection
-    implementation 'com.google.dagger:hilt-android:2.38.1'
+    implementation 'com.google.dagger:hilt-android:2.40.5'
     kapt 'com.google.dagger:hilt-android-compiler:2.38.1'
     implementation 'androidx.hilt:hilt-work:1.0.0'
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
@@ -74,13 +82,16 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
 
-    // Material
-    implementation 'com.google.android.material:material:1.5.0'
-
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
+
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+
 }

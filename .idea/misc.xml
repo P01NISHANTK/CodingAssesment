@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Discovery/Test/app/src/main/res/drawable-v24/ic_broken_image.xml" value="0.181" />
+        <entry key="..\:/Discovery/Test/app/src/main/res/drawable-v24/ic_image_place_holder.xml" value="0.181" />
+        <entry key="..\:/Discovery/Test/app/src/main/res/drawable-v24/ic_no_image.xml" value="0.181" />
         <entry key="..\:/Discovery/Test/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
+        <entry key="..\:/Discovery/Test/app/src/main/res/layout/custom_news_headline_row.xml" value="0.17239583333333333" />
       </map>
     </option>
   </component>
