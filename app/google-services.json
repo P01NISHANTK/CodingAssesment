@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "118408445984",
+    "project_id": "codingassesment",
+    "storage_bucket": "codingassesment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118408445984:android:7c95bcc481bda6eef0bc45",
+        "android_client_info": {
+          "package_name": "com.discovery.codingassesment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118408445984-a75g8m7q7cai9h9ngmugh6ckr4mc5e9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTdXdA-V9CgVm88juHumSDyT-DBI7gUrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118408445984-a75g8m7q7cai9h9ngmugh6ckr4mc5e9e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

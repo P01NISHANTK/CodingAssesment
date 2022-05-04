@@ -21,6 +21,10 @@ import com.discovery.codingassesment.net.APICallStatus
 import com.discovery.codingassesment.utils.AppUtils
 import com.discovery.codingassesment.utils.Constants
 import com.discovery.codingassesment.viewmodel.NewsHomeActivityViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -31,6 +35,7 @@ class NewsHomeActivity : AppCompatActivity(), NewsHeadlineAdapter.OnItemClickLis
         val TAG: String = NewsHomeActivity::class.java.simpleName
     }
 
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var binding: ActivityNewsHomeBinding
     private val viewModel: NewsHomeActivityViewModel by viewModels()
     private lateinit var newsHeadlineAdapter: NewsHeadlineAdapter
@@ -41,6 +46,12 @@ class NewsHomeActivity : AppCompatActivity(), NewsHeadlineAdapter.OnItemClickLis
         super.onCreate(savedInstanceState)
         binding = ActivityNewsHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        mFirebaseAnalytics = Firebase.analytics
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
+            param(FirebaseAnalytics.Param.ITEM_ID, "app launched.id")
+            param(FirebaseAnalytics.Param.ITEM_NAME, "app launched")
+        }
 
         initSpinner()
         buildRecyclerView()
@@ -49,6 +60,13 @@ class NewsHomeActivity : AppCompatActivity(), NewsHeadlineAdapter.OnItemClickLis
 
         binding.progressBar.visibility = View.GONE
         binding.btnRefresh.setOnClickListener {
+
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
+                param(FirebaseAnalytics.Param.ITEM_ID, "btnRefresh.id")
+                param(FirebaseAnalytics.Param.ITEM_NAME, "refreshButton Clicked")
+            }
+
+
             if (AppUtils.isNetworkConnected(this@NewsHomeActivity)) {
                 viewModel.startFetchingNewsHeadlines(true)
             } else {
@@ -81,6 +99,12 @@ class NewsHomeActivity : AppCompatActivity(), NewsHeadlineAdapter.OnItemClickLis
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
+
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
+                        param(FirebaseAnalytics.Param.ITEM_ID, "Spinner.id")
+                        param(FirebaseAnalytics.Param.ITEM_NAME, "Spinner clicked")
+                    }
+
                     val editor:SharedPreferences.Editor =  sharedPreferences.edit()
                     when(position) {
                         0 -> {
