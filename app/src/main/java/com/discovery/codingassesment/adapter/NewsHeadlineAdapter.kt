@@ -41,11 +41,15 @@ class NewsHeadlineAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder -> data : {${this.mDataSet[position]}")
 
+        //News Image
         holder.bind(this.mDataSet[position].urlToImage)
+
+        //News Source
         val source = context.resources.getString(
             R.string.news_source) + this.mDataSet[position].source.name
         holder.tvNewsSource.text = source
 
+        //News Published At
         val publishedAt = this.mDataSet[position].publishedAt
         val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
         val output = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US)
@@ -57,12 +61,17 @@ class NewsHeadlineAdapter(
         }
         val formatted = date?.let { output.format(it) }
         Log.i("DATE", "" + formatted)
-
-        Log.d("Nishant", "published at  $formatted")
         holder.tvPublishedAt.text = formatted
 
+        //Author
+        val author = context.resources.getString(
+            R.string.news_author) + this.mDataSet[position].author
+        holder.tv_author.text = author
+
+        //News Title
         holder.tvNewsTitle.text = this.mDataSet[position].title
 
+        //Row click listener
         holder.parentRow.setOnClickListener {
             itemClickListener.onItemClick(it, mDataSet[position].newsURL)
         }
@@ -77,9 +86,11 @@ class NewsHeadlineAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val parentRow: LinearLayout = itemView.findViewById(R.id.parent_row)
         private val ivNewsImageView: ImageView = itemView.findViewById(R.id.iv_row_news_image)
-        val tvNewsTitle: TextView = itemView.findViewById(R.id.tv_row_news_title)
         val tvNewsSource: TextView = itemView.findViewById(R.id.tv_row_news_source)
         val tvPublishedAt: TextView = itemView.findViewById(R.id.tv_row_news_time)
+        val tv_author: TextView = itemView.findViewById(R.id.tv_row_author)
+        val tvNewsTitle: TextView = itemView.findViewById(R.id.tv_row_news_title)
+
 
         fun bind(photoUrl: String?) {
             val url = if (photoUrl != null) "$photoUrl?w=360" else null //1

@@ -1,6 +1,8 @@
 package com.discovery.codingassesment.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.discovery.codingassesment.data.model.NewsHeadlinesData
 import com.discovery.codingassesment.net.NewsAPIState
 import com.discovery.codingassesment.repository.NewsRepository
+import com.discovery.codingassesment.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -23,19 +26,6 @@ class NewsHomeActivityViewModel @Inject constructor(
     companion object {
         val TAG: String = NewsHomeActivityViewModel::class.java.simpleName
     }
-
-    /*private lateinit var job: Job
-
-    val newsHeadlinesState = MutableStateFlow<NewsAPIState<NewsHeadlinesData>>(
-        NewsAPIState(
-            Status.LOADING,
-            null, ""
-        )
-    )
-
-    init {
-        fetchData()
-    }*/
 
     private val _newsAPIState = MutableLiveData<NewsAPIState<NewsHeadlinesData>>()
         .apply {
@@ -55,9 +45,9 @@ class NewsHomeActivityViewModel @Inject constructor(
         }
     }
 
-    fun getLegalDocs() {
+    fun fetchNewsHeadlines(country: String) {
         viewModelScope.launch {
-            newsRepository.fetchNewsHeadlines("us", "14126501a792437fb4d9be3b72db39f8")
+            newsRepository.fetchNewsHeadlines(country, "14126501a792437fb4d9be3b72db39f8")
                 .catch {
                     it.printStackTrace()
                     _newsAPIState.value =

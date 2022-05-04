@@ -1,6 +1,13 @@
 <resources>
-    <string name="app_name">NewsHeadlines</string>
+    <string name="app_name">News Headlines</string>
     <string name="image">image</string>
     <string name="news_source">"Source: "</string>
     <string name="time">"time: "</string>
+    <string name="selected_item">Selected Country</string>
+    <string name="news_author">"author: "</string>
+
+    <string-array name="Country">
+        <item>USA</item>
+        <item>Canada</item>
+    </string-array>
 </resources>
